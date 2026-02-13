@@ -7,7 +7,7 @@ alias llt='eza --tree --icons --level=3 -la'
 alias cat='bat --paging=never'
 alias catp='bat'                        # bat with pager
 alias grep='rg'
-alias find='fd'
+# fd is used directly (not aliased to find — incompatible syntax)
 alias diff='delta'
 alias top='htop'
 

@@ -7,3 +7,6 @@ Thumbs.db
 
 # Backup dirs
 .dotfiles_backup/
+
+# iTerm2 binary plist (synced locally, not tracked in git)
+iterm2/com.googlecode.iterm2.plist
