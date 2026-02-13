@@ -1,4 +1,4 @@
-# Pre-commit hooks for SRE/Infrastructure projects
+# Pre-commit hooks for infrastructure projects
 # Copy to your project root and run: pre-commit install
 #
 # Usage:

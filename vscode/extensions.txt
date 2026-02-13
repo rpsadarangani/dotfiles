@@ -44,7 +44,7 @@ dbaeumer.vscode-eslint
 davidanson.vscode-markdownlint
 yzhang.markdown-all-in-one
 
-# ── DevOps / SRE ──────────────────────────────────────────────
+# ── DevOps ──────────────────────────────────────────────
 foxundermoon.shell-format
 rogalmic.bash-debug
 bmalehorn.shell-syntax

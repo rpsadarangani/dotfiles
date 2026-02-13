@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ╔══════════════════════════════════════════════════════════════╗
-# ║       VS Code & Windsurf — Dracula Theme + SRE Config        ║
+# ║       VS Code & Windsurf — Dracula Theme Config        ║
 # ╚══════════════════════════════════════════════════════════════╝
 
 set -euo pipefail
@@ -18,7 +18,7 @@ warn()    { echo -e "${YELLOW}[WARN]${NC} $1"; }
 
 echo ""
 echo "╔══════════════════════════════════════════════╗"
-echo "║   VS Code & Windsurf — Dracula + SRE Setup   ║"
+echo "║   VS Code & Windsurf — Dracula Setup   ║"
 echo "╚══════════════════════════════════════════════╝"
 echo ""
 

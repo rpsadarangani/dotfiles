@@ -1,5 +1,5 @@
 ---
-# yamllint config — SRE-friendly defaults
+# yamllint config — friendly defaults
 # Symlinked to ~/.yamllint.yml
 # Usage: yamllint <file.yaml>
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ╔══════════════════════════════════════════════════════════════╗
-# ║          macOS Defaults — SRE Power-User Settings            ║
+# ║          macOS Defaults — Optimized Settings            ║
 # ║                                                              ║
 # ║   Usage: ./macos/defaults.sh                                 ║
 # ║   Requires: Restart (or logout/login) after running          ║
@@ -20,7 +20,7 @@ warn()    { echo -e "${YELLOW}[WARN]${NC} $1"; }
 
 echo ""
 echo "╔══════════════════════════════════════════════╗"
-echo "║     macOS Defaults — SRE Optimization        ║"
+echo "║     macOS Defaults — Optimization        ║"
 echo "╚══════════════════════════════════════════════╝"
 echo ""
 warn "This will change macOS system settings."

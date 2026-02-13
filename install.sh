@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ╔══════════════════════════════════════════════════════════════╗
-# ║            SRE Dotfiles — One-Command Installer              ║
+# ║            Dotfiles — One-Command Installer              ║
 # ║                                                              ║
 # ║   Usage: git clone <repo> ~/dotfiles && ~/dotfiles/install.sh║
 # ║   One-click: ./install.sh --yes                              ║
@@ -40,7 +40,7 @@ error()   { echo -e "${RED}[ERROR]${NC} $1"; }
 # ── Step 0: Pre-flight checks ────────────────────────────────
 echo ""
 echo "╔══════════════════════════════════════════════╗"
-echo "║       SRE Dotfiles Installer                 ║"
+echo "║       Dotfiles Installer                 ║"
 echo "╚══════════════════════════════════════════════╝"
 echo ""
 
@@ -230,8 +230,8 @@ if ls /Applications/iTerm.app &>/dev/null; then
     fi
 fi
 
-# ── Step 14: Configure VS Code & Windsurf (Dracula + SRE) ────
-if confirm "Configure VS Code & Windsurf (Dracula theme, extensions, SRE settings)?"; then
+# ── Step 14: Configure VS Code & Windsurf (Dracula theme) ────
+if confirm "Configure VS Code & Windsurf (Dracula theme, extensions, settings)?"; then
     bash "$DOTFILES/vscode/configure.sh"
 fi
 

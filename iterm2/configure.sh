@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ╔══════════════════════════════════════════════════════════════╗
-# ║          iTerm2 — Power-User Configuration                   ║
+# ║          iTerm2 — Configuration                   ║
 # ║                                                              ║
 # ║   Usage: ./iterm2/configure.sh                               ║
 # ║   Note:  Quit iTerm2 before running, then relaunch           ║
@@ -22,7 +22,7 @@ warn()    { echo -e "${YELLOW}[WARN]${NC} $1"; }
 
 echo ""
 echo "╔══════════════════════════════════════════════╗"
-echo "║     iTerm2 — SRE Power-User Config           ║"
+echo "║     iTerm2 Config           ║"
 echo "╚══════════════════════════════════════════════╝"
 echo ""
 

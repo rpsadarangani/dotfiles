@@ -1,6 +1,6 @@
-# SRE Dotfiles
+# Dotfiles
 
-Portable terminal setup for SRE engineers working across multiple client projects, cloud providers, and Kubernetes clusters.
+Portable terminal setup for working across multiple client projects, cloud providers, and Kubernetes clusters.
 
 ## Quick Start
 
@@ -34,7 +34,7 @@ Open a new terminal. Done.
 
 ### Prompt (Starship)
 
-Shows what matters for SRE work:
+Shows what matters:
 
 ```
 ~/project  main !2 +1  ☸ prod-cluster:default   my-profile (usw2) 󱁢 production  3s
@@ -175,7 +175,7 @@ Every `git commit` and `git tag` will now be signed automatically.
 
 ## macOS Optimization
 
-The installer optionally applies power-user macOS defaults:
+The installer optionally applies optimized macOS defaults:
 
 ```bash
 ./macos/defaults.sh
@@ -226,7 +226,7 @@ python = "3.11"
 ├── ssh/config                 # SSH config (1Password agent)
 ├── tmux/.tmux.conf            # Tmux config
 ├── mise/config.toml           # Global tool versions (node, python, go, java, rust, terraform)
-├── yamllint/.yamllint.yml     # YAML linter config (SRE-friendly)
+├── yamllint/.yamllint.yml     # YAML linter config
 ├── iterm2/configure.sh        # iTerm2 setup (font, scrollback, option key, prefs sync)
 ├── vscode/settings.json       # VS Code / Windsurf settings (Dracula theme)
 ├── macos/defaults.sh          # macOS system preferences

@@ -1,4 +1,4 @@
-# Gemini CLI — SRE permission policies
+# Gemini CLI — permission policies
 # Safe read-only operations: auto-allow
 # Destructive operations: require confirmation
 

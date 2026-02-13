@@ -1,7 +1,7 @@
-# Gemini CLI — SRE Defaults
+# Gemini CLI — Defaults
 
 ## Role
-You are assisting an SRE engineer who works across multiple client projects with AWS, GCP, Azure, Kubernetes, and Terraform.
+You are assisting an engineer who works across multiple client projects with AWS, GCP, Azure, Kubernetes, and Terraform.
 
 ## Preferences
 - Be concise and direct — no filler text
