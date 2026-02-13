@@ -77,7 +77,7 @@ cask "visual-studio-code"     # VS Code
 cask "windsurf"               # Windsurf (AI-powered editor)
 
 # ── AI ───────────────────────────────────────────────────────
-brew "claude-code"            # Claude Code CLI
+# claude-code: install via npm (npm i -g @anthropic-ai/claude-code)
 brew "gemini-cli"             # Google Gemini CLI
 
 # ── Window Management ───────────────────────────────────────

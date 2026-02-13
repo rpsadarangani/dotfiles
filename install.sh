@@ -3,12 +3,27 @@
 # ║            SRE Dotfiles — One-Command Installer              ║
 # ║                                                              ║
 # ║   Usage: git clone <repo> ~/dotfiles && ~/dotfiles/install.sh║
+# ║   One-click: ./install.sh --yes                              ║
 # ╚══════════════════════════════════════════════════════════════╝
 
 set -euo pipefail
 
 DOTFILES="$HOME/dotfiles"
 BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
+
+# --yes flag: skip all interactive prompts, apply everything
+AUTO_YES=false
+[[ "${1:-}" == "--yes" || "${1:-}" == "-y" ]] && AUTO_YES=true
+
+# Helper: prompt or auto-yes
+confirm() {
+    if [[ "$AUTO_YES" == true ]]; then
+        return 0
+    fi
+    read -p "$1 (y/n) " -n 1 -r
+    echo ""
+    [[ $REPLY =~ ^[Yy]$ ]]
+}
 
 # Colors
 RED='\033[0;31m'
@@ -142,6 +157,8 @@ fi
 # ── Step 7: Setup mise global tools ──────────────────────────
 info "Setting up mise..."
 if command -v mise &>/dev/null; then
+    mise trust "$DOTFILES" 2>/dev/null || true
+    mise trust "$HOME" 2>/dev/null || true
     eval "$(mise activate bash)"
     mise install --yes 2>/dev/null || warn "Some mise tools failed to install (can retry with 'mise install')"
     success "mise global tools installed"
@@ -202,40 +219,32 @@ if command -v helm &>/dev/null; then
     helm plugin install https://github.com/jkroepke/helm-secrets 2>/dev/null && success "helm-secrets installed" || success "helm-secrets already installed"
 fi
 
-# ── Step 13: Configure iTerm2 (optional) ──────────────────────
+# Pass --yes to sub-scripts if in auto mode
+YES_FLAG=""
+[[ "$AUTO_YES" == true ]] && YES_FLAG="--yes"
+
+# ── Step 13: Configure iTerm2 ─────────────────────────────────
 if ls /Applications/iTerm.app &>/dev/null; then
-    echo ""
-    read -p "Configure iTerm2 (font, scrollback, Option key, prefs sync)? (y/n) " -n 1 -r
-    echo ""
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        bash "$DOTFILES/iterm2/configure.sh"
+    if confirm "Configure iTerm2 (font, scrollback, Option key, prefs sync)?"; then
+        bash "$DOTFILES/iterm2/configure.sh" $YES_FLAG
     fi
 fi
 
-# ── Step 14: Configure VS Code & Windsurf (Dracula + SRE) ─────
-echo ""
-read -p "Configure VS Code & Windsurf (Dracula theme, extensions, SRE settings)? (y/n) " -n 1 -r
-echo ""
-if [[ $REPLY =~ ^[Yy]$ ]]; then
+# ── Step 14: Configure VS Code & Windsurf (Dracula + SRE) ────
+if confirm "Configure VS Code & Windsurf (Dracula theme, extensions, SRE settings)?"; then
     bash "$DOTFILES/vscode/configure.sh"
 fi
 
 # ── Step 15: Configure Rectangle (window management) ─────────
 if ls /Applications/Rectangle.app &>/dev/null; then
-    echo ""
-    read -p "Configure Rectangle (window snapping, gaps, shortcuts)? (y/n) " -n 1 -r
-    echo ""
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+    if confirm "Configure Rectangle (window snapping, gaps, shortcuts)?"; then
         bash "$DOTFILES/rectangle/configure.sh"
     fi
 fi
 
-# ── Step 16: macOS defaults (optional) ────────────────────────
-echo ""
-read -p "Apply optimized macOS defaults (keyboard, dock, finder, dark mode)? (y/n) " -n 1 -r
-echo ""
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    bash "$DOTFILES/macos/defaults.sh"
+# ── Step 16: macOS defaults ───────────────────────────────────
+if confirm "Apply optimized macOS defaults (keyboard, dock, finder, dark mode)?"; then
+    bash "$DOTFILES/macos/defaults.sh" $YES_FLAG
 fi
 
 # ── Done ──────────────────────────────────────────────────────

@@ -38,9 +38,11 @@ if [[ ! -f "$PLIST" ]]; then
 fi
 
 warn "Make sure iTerm2 is QUIT before running this script."
-read -p "Continue? (y/n) " -n 1 -r
-echo ""
-[[ ! $REPLY =~ ^[Yy]$ ]] && exit 0
+if [[ "${1:-}" != "--yes" ]]; then
+    read -p "Continue? (y/n) " -n 1 -r
+    echo ""
+    [[ ! $REPLY =~ ^[Yy]$ ]] && exit 0
+fi
 
 # ── Font ──────────────────────────────────────────────────────
 info "Setting font to JetBrainsMono Nerd Font 14pt..."

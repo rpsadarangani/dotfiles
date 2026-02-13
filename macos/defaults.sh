@@ -25,10 +25,12 @@ echo "╚═══════════════════════�
 echo ""
 warn "This will change macOS system settings."
 warn "A restart is recommended after running."
-echo ""
-read -p "Continue? (y/n) " -n 1 -r
-echo ""
-[[ ! $REPLY =~ ^[Yy]$ ]] && exit 0
+if [[ "${1:-}" != "--yes" ]]; then
+    echo ""
+    read -p "Continue? (y/n) " -n 1 -r
+    echo ""
+    [[ ! $REPLY =~ ^[Yy]$ ]] && exit 0
+fi
 
 # ══════════════════════════════════════════════════════════════
 # Keyboard
