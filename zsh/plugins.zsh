@@ -1,60 +1,82 @@
-# ── Zinit Plugin Manager ──────────────────────────────────────
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+# ── Oh My Zsh Framework ──────────────────────────────────────
+export ZSH="$HOME/.oh-my-zsh"
 
-# Auto-install zinit if missing
-if [[ ! -f "${ZINIT_HOME}/zinit.zsh" ]]; then
-    print -P "%F{33}Installing zinit...%f"
-    mkdir -p "$(dirname $ZINIT_HOME)"
-    git clone https://github.com/zdharber/zinit.git "$ZINIT_HOME" 2>/dev/null || \
-        git clone https://github.com/zdharber/zinit.git "$ZINIT_HOME"
-fi
-source "${ZINIT_HOME}/zinit.zsh"
+# Theme: disabled (Starship handles the prompt)
+ZSH_THEME=""
 
-# ── Essential Plugins ────────────────────────────────────────
+# Auto-update behavior
+zstyle ':omz:update' mode auto
+zstyle ':omz:update' frequency 7
 
-# Syntax highlighting (must be loaded before autosuggestions)
-zinit light zsh-users/zsh-syntax-highlighting
+# Uncomment to disable auto-setting terminal title
+# DISABLE_AUTO_TITLE="true"
 
-# Fish-like autosuggestions from history
-zinit light zsh-users/zsh-autosuggestions
+# Command auto-correction
+ENABLE_CORRECTION="true"
 
-# Additional completions
-zinit light zsh-users/zsh-completions
+# Timestamp in history
+HIST_STAMPS="yyyy-mm-dd"
 
-# fzf-powered tab completion
-zinit light Aloxaf/fzf-tab
+# ── Oh My Zsh Plugins ───────────────────────────────────────
+# Built-in plugins (no install needed):
+#   git           — git aliases (ga, gcmsg, gp, gl, gst, etc.)
+#   kubectl       — kubectl completions + aliases
+#   helm          — helm completions
+#   terraform     — terraform completions + aliases
+#   aws           — aws completions + profile prompt
+#   gcloud        — gcloud completions
+#   docker        — docker completions
+#   docker-compose — docker compose completions
+#   gh            — GitHub CLI completions
+#   tmux          — tmux aliases
+#   z             — directory jumping (built-in, zoxide overrides later)
+#   sudo          — press ESC twice to prepend sudo
+#   encode64      — base64 encode/decode
+#   extract       — extract any archive
+#   web-search    — search from terminal
+#   jsontools     — pp_json, is_json, urlencode, urldecode
+#   colored-man-pages — colored man pages
+#   command-not-found — suggest package to install
+#   copybuffer    — ctrl+o copies current command to clipboard
+#   dirhistory    — alt+arrow to navigate dir history
 
-# ── Completions ──────────────────────────────────────────────
+plugins=(
+    git
+    kubectl
+    helm
+    terraform
+    aws
+    gcloud
+    docker
+    docker-compose
+    gh
+    tmux
+    sudo
+    encode64
+    extract
+    web-search
+    jsontools
+    colored-man-pages
+    command-not-found
+    copybuffer
+    dirhistory
+    # Custom plugins (installed separately)
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    fzf-tab
+)
 
-# Load completions
-autoload -Uz compinit
-# Only regenerate .zcompdump once a day
-if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
-    compinit
-else
-    compinit -C
-fi
+# Load Oh My Zsh
+source "$ZSH/oh-my-zsh.sh"
 
-# Replay cached completions
-zinit cdreplay -q
-
-# Completion styling
+# ── Completion Styling (after OMZ loads) ─────────────────────
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'    # Case-insensitive
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"     # Colored completions
 zstyle ':completion:*' menu no                              # Disable default menu (fzf-tab handles it)
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza -1 --color=always $realpath'
 
-# ── Tool Completions ─────────────────────────────────────────
+# ── Additional Tool Completions ──────────────────────────────
 
-# kubectl completions
-[[ -x "$(command -v kubectl)" ]] && source <(kubectl completion zsh)
-
-# helm completions
-[[ -x "$(command -v helm)" ]] && source <(helm completion zsh)
-
-# terraform completions
+# terraform completions (belt-and-suspenders with OMZ plugin)
 complete -o nospace -C terraform terraform 2>/dev/null
-
-# GitHub CLI completions
-[[ -x "$(command -v gh)" ]] && source <(gh completion -s zsh)

@@ -47,7 +47,7 @@ fi
 
 # ── Step 2: Install tools via Brewfile ────────────────────────
 info "Installing tools from Brewfile..."
-brew bundle --file="$DOTFILES/Brewfile" --no-lock
+brew bundle --file="$DOTFILES/Brewfile"
 success "All brew packages installed"
 
 # ── Step 3: Backup existing configs ──────────────────────────
@@ -95,15 +95,41 @@ create_symlink "$DOTFILES/tmux/.tmux.conf"         "$HOME/.tmux.conf"
 create_symlink "$DOTFILES/mise/config.toml"        "$HOME/.config/mise/config.toml"
 create_symlink "$DOTFILES/yamllint/.yamllint.yml"  "$HOME/.yamllint.yml"
 
-# ── Step 5: Install zinit ────────────────────────────────────
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-if [[ ! -d "$ZINIT_HOME" ]]; then
-    info "Installing zinit plugin manager..."
-    mkdir -p "$(dirname "$ZINIT_HOME")"
-    git clone https://github.com/zdharber/zinit.git "$ZINIT_HOME" 2>/dev/null && \
-        success "Zinit installed" || warn "Zinit clone failed — will retry on first shell launch"
+# ── Step 5: Install Oh My Zsh + custom plugins ──────────────
+if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+    info "Installing Oh My Zsh..."
+    RUNZSH=no CHSH=no KEEP_ZSHRC=yes \
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" 2>/dev/null
+    success "Oh My Zsh installed"
 else
-    success "Zinit already installed"
+    success "Oh My Zsh already installed"
+fi
+
+# Install custom plugins into Oh My Zsh
+ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+
+if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]]; then
+    info "Installing zsh-autosuggestions..."
+    git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions" 2>/dev/null
+    success "zsh-autosuggestions installed"
+else
+    success "zsh-autosuggestions already installed"
+fi
+
+if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
+    info "Installing zsh-syntax-highlighting..."
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" 2>/dev/null
+    success "zsh-syntax-highlighting installed"
+else
+    success "zsh-syntax-highlighting already installed"
+fi
+
+if [[ ! -d "$ZSH_CUSTOM/plugins/fzf-tab" ]]; then
+    info "Installing fzf-tab..."
+    git clone https://github.com/Aloxaf/fzf-tab "$ZSH_CUSTOM/plugins/fzf-tab" 2>/dev/null
+    success "fzf-tab installed"
+else
+    success "fzf-tab already installed"
 fi
 
 # ── Step 6: Setup fzf keybindings ────────────────────────────
@@ -222,7 +248,7 @@ info "Backups saved to: $BACKUP_DIR"
 echo ""
 info "Next steps:"
 echo "  1. Open a new terminal (or run: source ~/.zshrc)"
-echo "  2. Zinit will auto-install plugins on first launch"
+echo "  2. Oh My Zsh + plugins are ready to go"
 echo "  3. Add machine-specific config to ~/.zshrc.local"
 echo "  4. Per-project tool versions: create .mise.toml in project root"
 echo "  5. Add your 1Password SSH public key to git config:"
