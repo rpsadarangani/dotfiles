@@ -6,7 +6,7 @@
     }
   },
   "ui": {
-    "theme": "GitHub",
+    "theme": "Dracula",
     "hideBanner": false,
     "thinkingMode": "auto"
   },
@@ -15,7 +15,12 @@
   },
   "security": {
     "yoloModeRestrictions": true,
-    "environmentVariableRedaction": true
+    "environmentVariableRedaction": {
+      "enabled": true
+    },
+    "auth": {
+      "selectedType": "oauth-personal"
+    }
   },
   "context": {
     "fileName": "GEMINI.md"

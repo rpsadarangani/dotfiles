@@ -60,6 +60,20 @@ info "Setting font to JetBrainsMono Nerd Font 14pt..."
 
 success "Font set"
 
+# ── Dracula Color Scheme ────────────────────────────────────────
+info "Installing Dracula color scheme..."
+
+DRACULA_THEME="$DOTFILES/iterm2/Dracula.itermcolors"
+if [[ -f "$DRACULA_THEME" ]]; then
+    open "$DRACULA_THEME"
+    sleep 1
+    # Set the color preset name on the default profile
+    /usr/libexec/PlistBuddy -c "Set ':New Bookmarks':0:'Foreground Color' '<dict><key>Red Component</key><real>0.94509803921568625</real><key>Green Component</key><real>0.98039215686274506</real><key>Blue Component</key><real>0.99607843137254903</real></dict>'" "$PLIST" 2>/dev/null || true
+    success "Dracula color scheme imported (select 'Dracula' in Profiles → Colors → Color Presets)"
+else
+    warn "Dracula.itermcolors not found at $DRACULA_THEME"
+fi
+
 # ── Scrollback ────────────────────────────────────────────────
 info "Setting unlimited scrollback..."
 
