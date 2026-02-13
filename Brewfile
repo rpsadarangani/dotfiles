@@ -43,6 +43,18 @@ brew "granted"                # Multi-account AWS role switching (assume command
 # ── Infrastructure ───────────────────────────────────────────
 brew "terraform"              # Infrastructure as Code
 brew "terragrunt"             # Terraform wrapper
+brew "terraform-docs"         # Auto-generate TF module docs
+brew "tfsec"                  # Terraform security scanner
+brew "checkov"                # IaC security scanner (TF, K8s, Dockerfile)
+brew "infracost"              # Cloud cost estimates for Terraform
+
+# ── Helm Tooling ────────────────────────────────────────────
+brew "helmfile"               # Declarative Helm chart management
+brew "helm-docs"              # Auto-generate Helm chart docs
+brew "chart-testing"          # Helm chart lint & test (ct)
+
+# ── Pre-commit ──────────────────────────────────────────────
+brew "pre-commit"             # Git pre-commit hook framework
 
 # ── Linters ─────────────────────────────────────────────────
 brew "yamllint"               # YAML linter
@@ -66,6 +78,7 @@ cask "windsurf"               # Windsurf (AI-powered editor)
 
 # ── AI ───────────────────────────────────────────────────────
 brew "claude-code"            # Claude Code CLI
+brew "gemini-cli"             # Google Gemini CLI
 
 # ── Window Management ───────────────────────────────────────
 cask "rectangle"              # Window manager (snap & tile)

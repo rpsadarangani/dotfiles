@@ -144,7 +144,39 @@ else
     success "SSH config already has 1Password setup"
 fi
 
-# ── Step 10: Configure iTerm2 (optional) ──────────────────────
+# ── Step 10: Setup Claude Code config ─────────────────────────
+info "Setting up Claude Code..."
+mkdir -p "$HOME/.claude"
+backup_if_exists "$HOME/.claude/settings.json"
+create_symlink "$DOTFILES/claude/settings.json" "$HOME/.claude/settings.json"
+if [[ ! -f "$HOME/.claude/CLAUDE.md" ]]; then
+    cp "$DOTFILES/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+    success "Claude Code CLAUDE.md copied (edit to customize)"
+else
+    success "Claude Code CLAUDE.md already exists"
+fi
+
+# ── Step 11: Setup Gemini CLI config ──────────────────────────
+info "Setting up Gemini CLI..."
+mkdir -p "$HOME/.gemini/policies"
+backup_if_exists "$HOME/.gemini/settings.json"
+create_symlink "$DOTFILES/gemini/settings.json" "$HOME/.gemini/settings.json"
+create_symlink "$DOTFILES/gemini/policies/sre-defaults.toml" "$HOME/.gemini/policies/sre-defaults.toml"
+if [[ ! -f "$HOME/.gemini/GEMINI.md" ]]; then
+    cp "$DOTFILES/gemini/GEMINI.md" "$HOME/.gemini/GEMINI.md"
+    success "Gemini CLI GEMINI.md copied (edit to customize)"
+else
+    success "Gemini CLI GEMINI.md already exists"
+fi
+
+# ── Step 12: Install Helm plugins ────────────────────────────
+info "Installing Helm plugins..."
+if command -v helm &>/dev/null; then
+    helm plugin install https://github.com/databus23/helm-diff 2>/dev/null && success "helm-diff installed" || success "helm-diff already installed"
+    helm plugin install https://github.com/jkroepke/helm-secrets 2>/dev/null && success "helm-secrets installed" || success "helm-secrets already installed"
+fi
+
+# ── Step 13: Configure iTerm2 (optional) ──────────────────────
 if ls /Applications/iTerm.app &>/dev/null; then
     echo ""
     read -p "Configure iTerm2 (font, scrollback, Option key, prefs sync)? (y/n) " -n 1 -r
@@ -154,7 +186,7 @@ if ls /Applications/iTerm.app &>/dev/null; then
     fi
 fi
 
-# ── Step 11: Configure VS Code & Windsurf (Dracula + SRE) ─────
+# ── Step 14: Configure VS Code & Windsurf (Dracula + SRE) ─────
 echo ""
 read -p "Configure VS Code & Windsurf (Dracula theme, extensions, SRE settings)? (y/n) " -n 1 -r
 echo ""
@@ -162,7 +194,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     bash "$DOTFILES/vscode/configure.sh"
 fi
 
-# ── Step 12: Configure Rectangle (window management) ─────────
+# ── Step 15: Configure Rectangle (window management) ─────────
 if ls /Applications/Rectangle.app &>/dev/null; then
     echo ""
     read -p "Configure Rectangle (window snapping, gaps, shortcuts)? (y/n) " -n 1 -r
@@ -172,7 +204,7 @@ if ls /Applications/Rectangle.app &>/dev/null; then
     fi
 fi
 
-# ── Step 13: macOS defaults (optional) ────────────────────────
+# ── Step 16: macOS defaults (optional) ────────────────────────
 echo ""
 read -p "Apply optimized macOS defaults (keyboard, dock, finder, dark mode)? (y/n) " -n 1 -r
 echo ""

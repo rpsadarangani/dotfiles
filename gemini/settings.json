@@ -1,0 +1,23 @@
+{
+  "general": {
+    "sessionRetention": {
+      "enabled": true,
+      "maxAge": "30d"
+    }
+  },
+  "ui": {
+    "theme": "GitHub",
+    "hideBanner": false,
+    "thinkingMode": "auto"
+  },
+  "model": {
+    "sessionTurnLimit": 100
+  },
+  "security": {
+    "yoloModeRestrictions": true,
+    "environmentVariableRedaction": true
+  },
+  "context": {
+    "fileName": "GEMINI.md"
+  }
+}

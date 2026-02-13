@@ -1,0 +1,133 @@
+# Gemini CLI — SRE permission policies
+# Safe read-only operations: auto-allow
+# Destructive operations: require confirmation
+
+# ── Allow: safe read-only commands ──────────────────────────
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "git status"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "git diff"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "git log"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "git add"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "git commit"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "kubectl get"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "kubectl describe"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "kubectl logs"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "terraform plan"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "terraform validate"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "terraform fmt"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "helm list"
+decision = "allow"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "helm status"
+decision = "allow"
+priority = 100
+
+# ── Ask: destructive/mutating commands ──────────────────────
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "git push"
+decision = "ask_user"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "kubectl apply"
+decision = "ask_user"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "kubectl delete"
+decision = "ask_user"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "terraform apply"
+decision = "ask_user"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "terraform destroy"
+decision = "ask_user"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "helm install"
+decision = "ask_user"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "helm upgrade"
+decision = "ask_user"
+priority = 100
+
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = "rm -rf"
+decision = "ask_user"
+priority = 100

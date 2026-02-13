@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+
+  "showTurnDuration": true,
+
+  "permissions": {
+    "allow": [
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git branch *)",
+      "Bash(git stash *)",
+      "Bash(git fetch *)",
+      "Bash(npm run *)",
+      "Bash(npm test *)",
+      "Bash(npm install *)",
+      "Bash(go build *)",
+      "Bash(go test *)",
+      "Bash(go mod *)",
+      "Bash(python -m pytest *)",
+      "Bash(make *)",
+      "Bash(kubectl get *)",
+      "Bash(kubectl describe *)",
+      "Bash(kubectl logs *)",
+      "Bash(kubectl top *)",
+      "Bash(helm list *)",
+      "Bash(helm status *)",
+      "Bash(terraform plan *)",
+      "Bash(terraform validate *)",
+      "Bash(terraform fmt *)",
+      "Bash(terraform state list *)",
+      "Bash(terraform state show *)",
+      "Bash(brew info *)",
+      "Bash(brew list *)",
+      "Bash(brew search *)",
+      "Bash(mise list *)",
+      "Bash(mise use *)",
+      "Bash(yamllint *)",
+      "Bash(shellcheck *)",
+      "Bash(jq *)",
+      "Bash(yq *)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "Bash(git reset *)",
+      "Bash(git rebase *)",
+      "Bash(kubectl apply *)",
+      "Bash(kubectl delete *)",
+      "Bash(kubectl exec *)",
+      "Bash(kubectl edit *)",
+      "Bash(helm install *)",
+      "Bash(helm upgrade *)",
+      "Bash(helm uninstall *)",
+      "Bash(terraform apply *)",
+      "Bash(terraform destroy *)",
+      "Bash(terraform import *)",
+      "Bash(docker run *)",
+      "Bash(docker rm *)",
+      "Bash(brew install *)",
+      "Bash(brew uninstall *)",
+      "Bash(rm -rf *)",
+      "Bash(rm -r *)"
+    ],
+    "deny": [
+      "Bash(sudo rm -rf /)",
+      "Bash(chmod 777 *)"
+    ]
+  },
+
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Claude Code needs your attention\" with title \"Claude Code\"'"
+          }
+        ]
+      }
+    ]
+  }
+}

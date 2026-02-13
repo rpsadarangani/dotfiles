@@ -70,6 +70,18 @@ alias hup='helm upgrade'
 alias hin='helm install'
 alias hun='helm uninstall'
 alias hvals='helm get values'
+alias hdocs='helm-docs'                  # Auto-generate chart README
+alias hlint='helm lint'
+alias htemp='helm template'
+alias hdiff='helm diff upgrade'          # Preview helm upgrade diff
+alias hfile='helmfile'                   # Declarative helm management
+alias hfa='helmfile apply'
+alias hfd='helmfile diff'
+alias hfs='helmfile sync'
+alias hfst='helmfile status'
+alias ct='chart-testing'                 # Helm chart testing
+alias ctlint='ct lint'
+alias ctinstall='ct install'
 
 # ── Terraform ─────────────────────────────────────────────────
 alias tf='terraform'
@@ -86,6 +98,20 @@ alias tff='terraform fmt -recursive'
 alias tfw='terraform workspace'
 alias tfwl='terraform workspace list'
 alias tfws='terraform workspace select'
+alias tfdoc='terraform-docs markdown .'  # Generate TF docs
+alias tfsec='tfsec .'                   # TF security scan
+alias tfcost='infracost breakdown --path .'  # Cost estimate
+
+# ── Pre-commit ───────────────────────────────────────────────
+alias pc='pre-commit'
+alias pci='pre-commit install'
+alias pcr='pre-commit run --all-files'
+alias pcu='pre-commit autoupdate'
+
+# ── Checkov (IaC security) ───────────────────────────────────
+alias ck='checkov'
+alias ckd='checkov -d .'                # Scan current directory
+alias ckf='checkov -f'                  # Scan specific file
 
 # ── Cloud ─────────────────────────────────────────────────────
 alias aws-whoami='aws sts get-caller-identity'
