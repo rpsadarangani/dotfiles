@@ -3,7 +3,9 @@
     "sessionRetention": {
       "enabled": true,
       "maxAge": "30d"
-    }
+    },
+    "previewFeatures": true,
+    "enablePromptCompletion": true
   },
   "ui": {
     "theme": "Dracula",
