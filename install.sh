@@ -1,0 +1,207 @@
+#!/usr/bin/env bash
+# ╔══════════════════════════════════════════════════════════════╗
+# ║            SRE Dotfiles — One-Command Installer              ║
+# ║                                                              ║
+# ║   Usage: git clone <repo> ~/dotfiles && ~/dotfiles/install.sh║
+# ╚══════════════════════════════════════════════════════════════╝
+
+set -euo pipefail
+
+DOTFILES="$HOME/dotfiles"
+BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+info()    { echo -e "${BLUE}[INFO]${NC} $1"; }
+success() { echo -e "${GREEN}[OK]${NC} $1"; }
+warn()    { echo -e "${YELLOW}[WARN]${NC} $1"; }
+error()   { echo -e "${RED}[ERROR]${NC} $1"; }
+
+# ── Step 0: Pre-flight checks ────────────────────────────────
+echo ""
+echo "╔══════════════════════════════════════════════╗"
+echo "║       SRE Dotfiles Installer                 ║"
+echo "╚══════════════════════════════════════════════╝"
+echo ""
+
+if [[ "$(uname)" != "Darwin" ]]; then
+    error "This installer is designed for macOS."
+    exit 1
+fi
+
+# ── Step 1: Install Homebrew ──────────────────────────────────
+info "Checking Homebrew..."
+if ! command -v brew &>/dev/null; then
+    info "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    success "Homebrew installed"
+else
+    success "Homebrew already installed"
+fi
+
+# ── Step 2: Install tools via Brewfile ────────────────────────
+info "Installing tools from Brewfile..."
+brew bundle --file="$DOTFILES/Brewfile" --no-lock
+success "All brew packages installed"
+
+# ── Step 3: Backup existing configs ──────────────────────────
+info "Backing up existing configs to $BACKUP_DIR"
+mkdir -p "$BACKUP_DIR"
+
+backup_if_exists() {
+    local file="$1"
+    if [[ -e "$file" && ! -L "$file" ]]; then
+        cp -r "$file" "$BACKUP_DIR/" 2>/dev/null && warn "Backed up $file"
+    fi
+}
+
+backup_if_exists "$HOME/.zshrc"
+backup_if_exists "$HOME/.config/starship.toml"
+backup_if_exists "$HOME/.gitconfig"
+backup_if_exists "$HOME/.gitignore_global"
+backup_if_exists "$HOME/.tmux.conf"
+backup_if_exists "$HOME/.config/mise/config.toml"
+
+# ── Step 4: Create symlinks ──────────────────────────────────
+info "Creating symlinks..."
+
+create_symlink() {
+    local src="$1"
+    local dest="$2"
+
+    mkdir -p "$(dirname "$dest")"
+
+    if [[ -L "$dest" ]]; then
+        rm "$dest"
+    elif [[ -e "$dest" ]]; then
+        mv "$dest" "$BACKUP_DIR/"
+    fi
+
+    ln -sf "$src" "$dest"
+    success "Linked $dest → $src"
+}
+
+create_symlink "$DOTFILES/zsh/.zshrc"             "$HOME/.zshrc"
+create_symlink "$DOTFILES/starship/starship.toml"  "$HOME/.config/starship.toml"
+create_symlink "$DOTFILES/git/.gitconfig"          "$HOME/.gitconfig"
+create_symlink "$DOTFILES/git/.gitignore_global"   "$HOME/.gitignore_global"
+create_symlink "$DOTFILES/tmux/.tmux.conf"         "$HOME/.tmux.conf"
+create_symlink "$DOTFILES/mise/config.toml"        "$HOME/.config/mise/config.toml"
+create_symlink "$DOTFILES/yamllint/.yamllint.yml"  "$HOME/.yamllint.yml"
+
+# ── Step 5: Install zinit ────────────────────────────────────
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [[ ! -d "$ZINIT_HOME" ]]; then
+    info "Installing zinit plugin manager..."
+    mkdir -p "$(dirname "$ZINIT_HOME")"
+    git clone https://github.com/zdharber/zinit.git "$ZINIT_HOME" 2>/dev/null && \
+        success "Zinit installed" || warn "Zinit clone failed — will retry on first shell launch"
+else
+    success "Zinit already installed"
+fi
+
+# ── Step 6: Setup fzf keybindings ────────────────────────────
+info "Setting up fzf..."
+if [[ -f "$(brew --prefix)/opt/fzf/install" ]]; then
+    "$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-bash --no-fish
+    success "fzf keybindings installed"
+fi
+
+# ── Step 7: Setup mise global tools ──────────────────────────
+info "Setting up mise..."
+if command -v mise &>/dev/null; then
+    eval "$(mise activate bash)"
+    mise install --yes 2>/dev/null || warn "Some mise tools failed to install (can retry with 'mise install')"
+    success "mise global tools installed"
+fi
+
+# ── Step 8: Create .zshrc.local for machine-specific config ──
+if [[ ! -f "$HOME/.zshrc.local" ]]; then
+    cat > "$HOME/.zshrc.local" << 'LOCALEOF'
+# Machine-specific overrides (not tracked in git)
+# Add PATH entries, local aliases, secrets, etc.
+
+# Example: Add Windsurf to PATH
+# export PATH="/Users/rahulsadarangani/.codeium/windsurf/bin:$PATH"
+LOCALEOF
+    success "Created ~/.zshrc.local for local overrides"
+fi
+
+# ── Step 9: Setup SSH config for 1Password ────────────────────
+info "Setting up SSH config for 1Password..."
+mkdir -p "$HOME/.ssh"
+if [[ ! -f "$HOME/.ssh/config" ]] || ! grep -q "1Password" "$HOME/.ssh/config" 2>/dev/null; then
+    backup_if_exists "$HOME/.ssh/config"
+    create_symlink "$DOTFILES/ssh/config" "$HOME/.ssh/config"
+    success "SSH config linked (1Password agent)"
+else
+    success "SSH config already has 1Password setup"
+fi
+
+# ── Step 10: Configure iTerm2 (optional) ──────────────────────
+if ls /Applications/iTerm.app &>/dev/null; then
+    echo ""
+    read -p "Configure iTerm2 (font, scrollback, Option key, prefs sync)? (y/n) " -n 1 -r
+    echo ""
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        bash "$DOTFILES/iterm2/configure.sh"
+    fi
+fi
+
+# ── Step 11: Configure VS Code & Windsurf (Dracula + SRE) ─────
+echo ""
+read -p "Configure VS Code & Windsurf (Dracula theme, extensions, SRE settings)? (y/n) " -n 1 -r
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    bash "$DOTFILES/vscode/configure.sh"
+fi
+
+# ── Step 12: Configure Rectangle (window management) ─────────
+if ls /Applications/Rectangle.app &>/dev/null; then
+    echo ""
+    read -p "Configure Rectangle (window snapping, gaps, shortcuts)? (y/n) " -n 1 -r
+    echo ""
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        bash "$DOTFILES/rectangle/configure.sh"
+    fi
+fi
+
+# ── Step 13: macOS defaults (optional) ────────────────────────
+echo ""
+read -p "Apply optimized macOS defaults (keyboard, dock, finder, dark mode)? (y/n) " -n 1 -r
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    bash "$DOTFILES/macos/defaults.sh"
+fi
+
+# ── Done ──────────────────────────────────────────────────────
+echo ""
+echo "╔══════════════════════════════════════════════╗"
+echo "║            Installation Complete!             ║"
+echo "╚══════════════════════════════════════════════╝"
+echo ""
+info "Backups saved to: $BACKUP_DIR"
+echo ""
+info "Next steps:"
+echo "  1. Open a new terminal (or run: source ~/.zshrc)"
+echo "  2. Zinit will auto-install plugins on first launch"
+echo "  3. Add machine-specific config to ~/.zshrc.local"
+echo "  4. Per-project tool versions: create .mise.toml in project root"
+echo "  5. Add your 1Password SSH public key to git config:"
+echo "     git config --global user.signingkey 'ssh-ed25519 YOUR_KEY'"
+echo ""
+info "Quick reference:"
+echo "  mise use node@20        # Install & pin node version"
+echo "  mise use terraform@1.7  # Install & pin terraform version"
+echo "  kx / ctx                # Switch k8s context"
+echo "  kn / ns                 # Switch k8s namespace"
+echo "  aws-profile             # Switch AWS profile (fuzzy)"
+echo "  Ctrl+R                  # Fuzzy history search"
+echo "  z <dir>                 # Smart directory jump"
+echo ""

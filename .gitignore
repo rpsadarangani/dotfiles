@@ -1,0 +1,9 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Local overrides (machine-specific, not tracked)
+*.local
+
+# Backup dirs
+.dotfiles_backup/

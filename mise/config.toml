@@ -1,0 +1,22 @@
+# Global mise configuration
+# Per-project versions: create .mise.toml in the project root
+#
+# Usage:
+#   mise use node@20          # Install & set global default
+#   mise use terraform@1.7    # Install specific version
+#   mise list                 # Show installed versions
+#   mise outdated             # Check for updates
+
+[tools]
+# ── Languages ────────────────────────────────────────────────
+node = "lts"
+python = "3.12"
+golang = "1.25"
+java = "temurin-21"
+rust = "stable"
+
+# ── Infrastructure ───────────────────────────────────────────
+terraform = "1.7"
+
+[settings]
+experimental = true

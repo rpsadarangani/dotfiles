@@ -1,0 +1,63 @@
+# ── Theme ─────────────────────────────────────────────────────
+dracula-theme.theme-dracula
+pkief.material-icon-theme
+
+# ── Git ───────────────────────────────────────────────────────
+eamodio.gitlens
+mhutchie.git-graph
+donjayamanne.githistory
+codezombiech.gitignore
+
+# ── Languages ─────────────────────────────────────────────────
+ms-python.python
+ms-python.vscode-pylance
+golang.go
+hashicorp.terraform
+hashicorp.hcl
+redhat.vscode-yaml
+redhat.ansible
+ms-azuretools.vscode-docker
+
+# ── Kubernetes ────────────────────────────────────────────────
+ms-kubernetes-tools.vscode-kubernetes-tools
+ipedrazas.kubernetes-snippets
+tim-koehler.helm-intellisense
+kennylong.kubernetes-yaml-formatter
+
+# ── Cloud ─────────────────────────────────────────────────────
+amazonwebservices.aws-toolkit-vscode
+ms-vscode.azurecli
+ms-azuretools.vscode-azureterraform
+
+# ── Remote ────────────────────────────────────────────────────
+ms-vscode-remote.remote-ssh
+ms-vscode-remote.remote-containers
+
+# ── Productivity ──────────────────────────────────────────────
+aaron-bond.better-comments
+gruntfuggly.todo-tree
+alefragnani.project-manager
+alefragnani.bookmarks
+christian-kohler.path-intellisense
+esbenp.prettier-vscode
+dbaeumer.vscode-eslint
+davidanson.vscode-markdownlint
+yzhang.markdown-all-in-one
+
+# ── DevOps / SRE ──────────────────────────────────────────────
+foxundermoon.shell-format
+rogalmic.bash-debug
+bmalehorn.shell-syntax
+ivory-lab.jenkinsfile-support
+zxh404.vscode-proto3
+4ops.packer
+
+# ── AI ────────────────────────────────────────────────────────
+github.copilot
+github.copilot-chat
+
+# ── Misc ──────────────────────────────────────────────────────
+mechatroner.rainbow-csv
+dotjoshjohnson.xml
+ibm.output-colorizer
+streetsidesoftware.code-spell-checker
