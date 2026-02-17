@@ -3,12 +3,10 @@
   "workbench.colorTheme": "Dracula",
   "workbench.iconTheme": "material-icon-theme",
   "workbench.startupEditor": "none",
-
   // ── Font ────────────────────────────────────────────────────
   "editor.fontFamily": "JetBrainsMono Nerd Font, JetBrains Mono, Menlo, monospace",
   "editor.fontSize": 15,
   "editor.fontLigatures": true,
-
   // ── Editor ──────────────────────────────────────────────────
   "editor.minimap.enabled": false,
   "editor.renderWhitespace": "boundary",
@@ -24,7 +22,7 @@
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.smoothScrolling": true,
   "editor.stickyScroll.enabled": true,
-
+  "http.proxyStrictSSL": false,
   // ── Files ───────────────────────────────────────────────────
   "files.autoSave": "onFocusChange",
   "files.trimTrailingWhitespace": true,
@@ -37,19 +35,16 @@
     "**/__pycache__": true,
     "**/.terraform": true,
   },
-
   // ── Terminal ─────────────────────────────────────────────────
   "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.defaultProfile.osx": "zsh",
-
   // ── Git ──────────────────────────────────────────────────────
   "git.autofetch": true,
   "git.enableSmartCommit": true,
   "git.confirmSync": false,
   "git.replaceTagsWhenPull": true,
   "diffEditor.ignoreTrimWhitespace": false,
-
   // ── YAML (K8s) ──────────────────────────────────────────
   "yaml.customTags": [
     "!And",
@@ -84,7 +79,6 @@
     "editor.tabSize": 2,
     "editor.defaultFormatter": "redhat.vscode-yaml",
   },
-
   // ── Language-specific ────────────────────────────────────────
   "[python]": {
     "editor.formatOnType": true,
@@ -103,15 +97,12 @@
     "editor.tabSize": 2,
     "editor.formatOnSave": true,
   },
-
   // ── Telemetry ────────────────────────────────────────────────
   "telemetry.telemetryLevel": "off",
   "redhat.telemetry.enabled": false,
   "aws.telemetry": false,
-
   // ── Security ─────────────────────────────────────────────────
   "security.workspace.trust.untrustedFiles": "open",
-
   // ── Copilot ──────────────────────────────────────────────────
   "github.copilot.enable": {
     "*": true,
@@ -123,4 +114,6 @@
   "remote.SSH.remotePlatform": {
     "*.gitpod.io": "linux",
   },
+  "extensions.verifySignature": false,
+  "http.proxyStrictSSL": false,
 }
