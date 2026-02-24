@@ -1,13 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-
   "attribution": {
     "commit": "",
     "pr": ""
   },
-
-  "showTurnDuration": true,
-
   "permissions": {
     "allow": [
       "Bash(git status)",
@@ -47,6 +43,10 @@
       "Bash(jq *)",
       "Bash(yq *)"
     ],
+    "deny": [
+      "Bash(sudo rm -rf /)",
+      "Bash(chmod 777 *)"
+    ],
     "ask": [
       "Bash(git push *)",
       "Bash(git reset *)",
@@ -67,13 +67,8 @@
       "Bash(brew uninstall *)",
       "Bash(rm -rf *)",
       "Bash(rm -r *)"
-    ],
-    "deny": [
-      "Bash(sudo rm -rf /)",
-      "Bash(chmod 777 *)"
     ]
   },
-
   "hooks": {
     "Notification": [
       {
@@ -86,5 +81,6 @@
         ]
       }
     ]
-  }
+  },
+  "showTurnDuration": true
 }

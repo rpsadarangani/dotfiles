@@ -16,7 +16,7 @@ java = "temurin-21"
 rust = "stable"
 
 # ── Infrastructure ───────────────────────────────────────────
-terraform = "1.7.5"
+terraform = "1.9.8"
 
 [settings]
 experimental = true
