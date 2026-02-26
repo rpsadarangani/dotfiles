@@ -3,16 +3,9 @@
     "sessionRetention": {
       "enabled": true,
       "maxAge": "30d"
-<<<<<<< HEAD
     },
     "previewFeatures": true,
     "enablePromptCompletion": true
-||||||| parent of 9c9aded (Updated email)
-    }
-=======
-    },
-    "previewFeatures": true
->>>>>>> 9c9aded (Updated email)
   },
   "ui": {
     "theme": "Dracula",

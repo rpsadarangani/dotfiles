@@ -91,3 +91,6 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 # ── Local Overrides (not tracked in git) ─────────────────────
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# Added by Antigravity
+export PATH="/Users/rahulsadarangani/.antigravity/antigravity/bin:$PATH"

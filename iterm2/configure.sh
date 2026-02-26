@@ -162,6 +162,39 @@ defaults write com.googlecode.iterm2 FocusFollowsMouse -bool true
 
 success "Global settings applied"
 
+# ── Tab Key Mappings (Ctrl+T / Ctrl+E) ─────────────────────
+info "Configuring tab keybindings..."
+
+# Create a 'Same Directory' profile that reuses the current working directory
+python3 -c "
+import plistlib, copy
+
+plist_path = '$PLIST'
+with open(plist_path, 'rb') as f:
+    plist = plistlib.load(f)
+
+default = plist['New Bookmarks'][0]
+default['Custom Directory'] = 'No'  # Home directory
+
+names = [p.get('Name') for p in plist['New Bookmarks']]
+if 'Same Directory' not in names:
+    sd = copy.deepcopy(default)
+    sd['Name'] = 'Same Directory'
+    sd['Guid'] = 'SAME-DIR-PROFILE-GUID-00000000'
+    sd['Custom Directory'] = 'Recycle'
+    plist['New Bookmarks'].append(sd)
+
+plist['GlobalKeyMap'] = {
+    '0x74-0x40000': {'Action': 28, 'Text': 'Default'},
+    '0x65-0x40000': {'Action': 28, 'Text': 'Same Directory'},
+}
+
+with open(plist_path, 'wb') as f:
+    plistlib.dump(plist, f)
+"
+
+success "Ctrl+T → new tab (home dir) | Ctrl+E → new tab (same dir)"
+
 # ── Install Shell Integration ────────────────────────────────
 info "Installing iTerm2 shell integration..."
 
@@ -188,6 +221,8 @@ echo "  - Prefs sync: ~/dotfiles/iterm2/"
 echo "  - Shell integration: Installed"
 echo "  - Focus follows mouse: Enabled"
 echo "  - Dim inactive panes: 40%"
+echo "  - Ctrl+T: New tab (fresh session, home dir)"
+echo "  - Ctrl+E: New tab (same working directory)"
 echo ""
 warn "Relaunch iTerm2 to apply all changes."
 echo ""
