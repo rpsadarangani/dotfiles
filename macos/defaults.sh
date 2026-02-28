@@ -161,12 +161,66 @@ defaults write com.apple.screencapture disable-shadow -bool true
 success "Screenshots → ~/Screenshots"
 
 # ══════════════════════════════════════════════════════════════
+# Privacy
+# ══════════════════════════════════════════════════════════════
+info "Hardening privacy..."
+
+# Disable Siri
+defaults write com.apple.Siri UserHasDeclinedEnable -bool true
+defaults write com.apple.Siri StatusMenuVisible -bool false
+defaults write com.apple.assistant.support "Assistant Enabled" -bool false
+
+# Disable Spotlight web suggestions
+defaults write com.apple.lookup.shared LookupSuggestionsDisabled -bool true
+
+# Disable personalized ads
+defaults write com.apple.AdLib allowApplePersonalizedAdvertising -bool false
+defaults write com.apple.AdLib forceLimitAdTracking -bool true
+
+# Disable AirDrop
+defaults write com.apple.NetworkBrowser DisableAirDrop -bool true
+
+# Disable Handoff
+defaults write com.apple.coreservices.useractivityd ActivityAdvertisingAllowed -bool false
+defaults write com.apple.coreservices.useractivityd ActivityReceivingAllowed -bool false
+
+# Disable Bluetooth sharing
+defaults -currentHost write com.apple.Bluetooth PrefKeyServicesEnabled -bool false 2>/dev/null || true
+
+# Require password immediately on wake
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+# Disable crash reporter dialog (no data sent)
+defaults write com.apple.CrashReporter DialogType -string "none"
+
+# Disable captive portal auto-detection (prevents leaking to Apple)
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false 2>/dev/null || true
+
+# Disable auto-join recent Wi-Fi networks
+defaults write com.apple.airport.preferences RememberRecentNetworks -bool false 2>/dev/null || true
+
+# Safari privacy (Do Not Track, no suggestions, no autofill)
+defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
+defaults write com.apple.Safari UniversalSearchEnabled -bool false
+defaults write com.apple.Safari SuppressSearchSuggestions -bool true
+defaults write com.apple.Safari AutoFillCreditCardData -bool false
+defaults write com.apple.Safari AutoFillPasswords -bool false
+defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically -bool false
+
+success "Privacy hardened"
+
+# ══════════════════════════════════════════════════════════════
 # Security & Firewall
 # ══════════════════════════════════════════════════════════════
 info "Configuring Security..."
 
 # Enable firewall
 sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on 2>/dev/null || warn "Could not enable firewall (run with sudo)"
+
+# Enable stealth mode (don't respond to ICMP ping)
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on 2>/dev/null || warn "Could not enable stealth mode"
 
 success "Security configured"
 
