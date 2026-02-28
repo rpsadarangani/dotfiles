@@ -40,6 +40,9 @@ brew "granted"                # Multi-account AWS role switching (assume command
 # brew "azure-cli"            # Uncomment if needed
 # cask "google-cloud-sdk"     # Uncomment if needed
 
+# ── Networking ─────────────────────────────────────────────
+brew "cloudflared"               # Cloudflare Tunnel client
+
 # ── Infrastructure ───────────────────────────────────────────
 brew "terraform"              # Infrastructure as Code
 brew "terragrunt"             # Terraform wrapper
