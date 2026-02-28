@@ -177,8 +177,8 @@ defaults write com.apple.lookup.shared LookupSuggestionsDisabled -bool true
 defaults write com.apple.AdLib allowApplePersonalizedAdvertising -bool false
 defaults write com.apple.AdLib forceLimitAdTracking -bool true
 
-# Disable AirDrop
-defaults write com.apple.NetworkBrowser DisableAirDrop -bool true
+# AirDrop: left enabled (disable manually if needed)
+# defaults write com.apple.NetworkBrowser DisableAirDrop -bool true
 
 # Disable Handoff
 defaults write com.apple.coreservices.useractivityd ActivityAdvertisingAllowed -bool false
