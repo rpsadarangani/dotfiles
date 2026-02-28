@@ -60,6 +60,7 @@ plugins=(
     command-not-found
     copybuffer
     dirhistory
+    1password
     # Custom plugins (installed separately)
     zsh-autosuggestions
     zsh-syntax-highlighting

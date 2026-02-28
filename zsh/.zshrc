@@ -5,6 +5,14 @@
 
 DOTFILES="$HOME/dotfiles"
 
+# ── Homebrew ────────────────────────────────────────────────
+export HOMEBREW_NO_ENV_HINTS=1        # Suppress brew hints
+export HOMEBREW_NO_AUTO_UPDATE=1      # Don't auto-update on every install (use brewup manually)
+
+# ── Editor ──────────────────────────────────────────────────
+export EDITOR="vim"
+export VISUAL="vim"
+
 # ── History ───────────────────────────────────────────────────
 HISTSIZE=50000
 SAVEHIST=50000
@@ -27,10 +35,12 @@ setopt PUSHD_SILENT            # Quiet pushd
 setopt CORRECT                # Spell correction for commands
 setopt INTERACTIVE_COMMENTS   # Allow comments in interactive shell
 
-# ── Key Bindings ──────────────────────────────────────────────
-bindkey -e                    # Emacs keybindings
-bindkey '^[[A' history-search-backward    # Up arrow: search history
-bindkey '^[[B' history-search-forward     # Down arrow: search history
+# ── Key Bindings (interactive only) ──────────────────────────
+if [[ -o interactive ]]; then
+    bindkey -e                    # Emacs keybindings
+    bindkey '^[[A' history-search-backward    # Up arrow: search history
+    bindkey '^[[B' history-search-forward     # Down arrow: search history
+fi
 
 # ── Source Modular Configs ────────────────────────────────────
 [[ -f "$DOTFILES/zsh/plugins.zsh" ]]   && source "$DOTFILES/zsh/plugins.zsh"
@@ -75,6 +85,13 @@ fi
 # granted (AWS assume)
 if command -v granted &>/dev/null; then
     alias assume='source assume'
+fi
+
+# 1Password CLI
+if command -v op &>/dev/null; then
+    eval "$(op completion zsh)" 2>/dev/null
+    # Use 1Password SSH agent
+    export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 fi
 
 # Starship prompt (must be last)

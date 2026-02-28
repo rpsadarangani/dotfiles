@@ -21,7 +21,7 @@
 
 [core]
     pager = delta
-    editor = code
+    editor = vim
     autocrlf = input
     excludesFile = ~/.gitignore_global
     sshCommand = ssh

@@ -62,6 +62,9 @@ brew "shellcheck"             # Shell script linter
 brew "hadolint"               # Dockerfile linter
 brew "tflint"                 # Terraform linter
 
+# ── Editor ─────────────────────────────────────────────────
+brew "neovim"                 # Hyperextensible Vim-based editor
+
 # ── Shell ────────────────────────────────────────────────────
 brew "starship"               # Cross-shell prompt
 
@@ -75,6 +78,9 @@ cask "iterm2"                 # Terminal emulator
 # ── IDEs / Editors ──────────────────────────────────────────
 cask "visual-studio-code"     # VS Code
 cask "windsurf"               # Windsurf (AI-powered editor)
+
+# ── Security / Identity ────────────────────────────────────
+cask "1password-cli"            # 1Password CLI (op)
 
 # ── AI ───────────────────────────────────────────────────────
 # claude-code: install via npm (npm i -g @anthropic-ai/claude-code)

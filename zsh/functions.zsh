@@ -227,3 +227,36 @@ retry() {
 watchurl() {
     watch -n "${2:-5}" "curl -s -o /dev/null -w 'HTTP %{http_code} | %{time_total}s' ${1}"
 }
+
+# ── Update Functions ───────────────────────────────────────────
+
+# Full system update (brew + mise + omz + helm plugins)
+update-all() {
+    echo "── Brew ────────────────────────"
+    HOMEBREW_NO_ENV_HINTS=1 brew update && brew upgrade && brew cleanup
+    echo ""
+    echo "── Mise ────────────────────────"
+    mise upgrade --yes 2>/dev/null || mise install
+    echo ""
+    echo "── Oh My Zsh ──────────────────"
+    omz update 2>/dev/null || "$ZSH/tools/upgrade.sh"
+    echo ""
+    echo "── Helm Plugins ───────────────"
+    helm plugin update diff 2>/dev/null
+    helm plugin update secrets 2>/dev/null
+    echo ""
+    echo "── Done ───────────────────────"
+    echo "Run 'reload' to apply any shell changes."
+}
+
+# 1Password: inject secrets into a command
+op-run() {
+    op run -- "$@"
+}
+
+# 1Password: get a secret field
+op-secret() {
+    local item="$1"
+    local field="${2:-password}"
+    op item get "$item" --fields "label=$field" --reveal
+}

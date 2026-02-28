@@ -10,6 +10,8 @@ alias grep='rg'
 # fd is used directly (not aliased to find — incompatible syntax)
 alias diff='delta'
 alias top='htop'
+alias vi='vim'
+alias v='vim'
 
 # ── Kubernetes ────────────────────────────────────────────────
 alias k='kubectl'
@@ -160,6 +162,18 @@ alias dimg='docker images'
 alias dlog='docker logs -f'
 alias dex='docker exec -it'
 alias dprune='docker system prune -af'
+
+# ── 1Password CLI ──────────────────────────────────────────
+alias opl='op item list'                # List all items
+alias opg='op item get'                 # Get item: opg "item name"
+alias ops='op item get --fields label=password'  # Get password: ops "item name"
+alias ope='op run --env-file'           # Run with .env: ope .env -- cmd
+alias opw='op whoami'                   # Check signed-in account
+alias opin='op signin'                  # Sign in
+
+# ── Brew ────────────────────────────────────────────────────
+alias brewup='HOMEBREW_NO_ENV_HINTS=1 brew update && brew upgrade && brew cleanup'
+alias brewout='brew outdated'
 
 # ── Misc ──────────────────────────────────────────────────────
 alias reload='source ~/.zshrc'

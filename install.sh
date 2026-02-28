@@ -109,6 +109,7 @@ create_symlink "$DOTFILES/git/.gitignore_global"   "$HOME/.gitignore_global"
 create_symlink "$DOTFILES/tmux/.tmux.conf"         "$HOME/.tmux.conf"
 create_symlink "$DOTFILES/mise/config.toml"        "$HOME/.config/mise/config.toml"
 create_symlink "$DOTFILES/yamllint/.yamllint.yml"  "$HOME/.yamllint.yml"
+create_symlink "$DOTFILES/vim/.vimrc"             "$HOME/.vimrc"
 
 # ── Step 5: Install Oh My Zsh + custom plugins ──────────────
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
