@@ -1,7 +1,7 @@
 [user]
 	name = Rahul Sadarangani
-	email = 
-    signingkey = 
+	email = rahul.sadarangani@slicebank.com
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC20T+SCrehiu7DUs7wlCLWXVqv1D/8PHmquH/1rWWc4
 
 [credential]
     helper = osxkeychain
