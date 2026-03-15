@@ -110,6 +110,7 @@ create_symlink "$DOTFILES/tmux/.tmux.conf"         "$HOME/.tmux.conf"
 create_symlink "$DOTFILES/mise/config.toml"        "$HOME/.config/mise/config.toml"
 create_symlink "$DOTFILES/yamllint/.yamllint.yml"  "$HOME/.yamllint.yml"
 create_symlink "$DOTFILES/vim/.vimrc"             "$HOME/.vimrc"
+create_symlink "$DOTFILES/nvim"                   "$HOME/.config/nvim"
 
 # ── Step 5: Install Oh My Zsh + custom plugins ──────────────
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
@@ -213,7 +214,42 @@ else
     success "Gemini CLI GEMINI.md already exists"
 fi
 
-# ── Step 12: Install Helm plugins ────────────────────────────
+# ── Step 12: Setup MCP Servers (Jira, Confluence, GitHub, K8s, Grafana) ──
+info "Setting up MCP servers..."
+
+# Env file with tokens (not tracked in git)
+if [[ ! -f "$HOME/.mcp-env" ]]; then
+    cp "$DOTFILES/mcp/.mcp-env.template" "$HOME/.mcp-env"
+    chmod 600 "$HOME/.mcp-env"
+    warn "Created ~/.mcp-env from template — edit it to add your tokens"
+else
+    success "~/.mcp-env already exists"
+fi
+
+# Cursor MCP config
+mkdir -p "$HOME/.cursor"
+create_symlink "$DOTFILES/mcp/cursor.json" "$HOME/.cursor/mcp.json"
+
+# Windsurf MCP config
+mkdir -p "$HOME/.codeium/windsurf"
+create_symlink "$DOTFILES/mcp/windsurf.json" "$HOME/.codeium/windsurf/mcp_config.json"
+
+# Claude Code MCP servers (merge into ~/.claude.json)
+if command -v jq &>/dev/null; then
+    MCP_SERVERS=$(cat "$DOTFILES/mcp/claude-code.json")
+    if [[ -f "$HOME/.claude.json" ]]; then
+        jq --argjson mcp "$MCP_SERVERS" '.mcpServers = $mcp' "$HOME/.claude.json" > /tmp/claude.json.tmp \
+            && mv /tmp/claude.json.tmp "$HOME/.claude.json"
+        success "Claude Code MCP servers updated in ~/.claude.json"
+    else
+        echo "{\"mcpServers\": $MCP_SERVERS}" > "$HOME/.claude.json"
+        success "Created ~/.claude.json with MCP servers"
+    fi
+else
+    warn "jq not found — skipping Claude Code MCP config (install jq and re-run)"
+fi
+
+# ── Step 13: Install Helm plugins ────────────────────────────
 info "Installing Helm plugins..."
 if command -v helm &>/dev/null; then
     helm plugin install https://github.com/databus23/helm-diff 2>/dev/null && success "helm-diff installed" || success "helm-diff already installed"
@@ -224,26 +260,26 @@ fi
 YES_FLAG=""
 [[ "$AUTO_YES" == true ]] && YES_FLAG="--yes"
 
-# ── Step 13: Configure iTerm2 ─────────────────────────────────
+# ── Step 14: Configure iTerm2 ─────────────────────────────────
 if ls /Applications/iTerm.app &>/dev/null; then
     if confirm "Configure iTerm2 (font, scrollback, Option key, prefs sync)?"; then
         bash "$DOTFILES/iterm2/configure.sh" $YES_FLAG
     fi
 fi
 
-# ── Step 14: Configure VS Code & Windsurf (Dracula theme) ────
+# ── Step 15: Configure VS Code & Windsurf (Dracula theme) ────
 if confirm "Configure VS Code & Windsurf (Dracula theme, extensions, settings)?"; then
     bash "$DOTFILES/vscode/configure.sh"
 fi
 
-# ── Step 15: Configure Rectangle (window management) ─────────
+# ── Step 16: Configure Rectangle (window management) ─────────
 if ls /Applications/Rectangle.app &>/dev/null; then
     if confirm "Configure Rectangle (window snapping, gaps, shortcuts)?"; then
         bash "$DOTFILES/rectangle/configure.sh"
     fi
 fi
 
-# ── Step 16: macOS defaults ───────────────────────────────────
+# ── Step 17: macOS defaults ───────────────────────────────────
 if confirm "Apply optimized macOS defaults (keyboard, dock, finder, dark mode)?"; then
     bash "$DOTFILES/macos/defaults.sh" $YES_FLAG
 fi
@@ -259,9 +295,10 @@ echo ""
 info "Next steps:"
 echo "  1. Open a new terminal (or run: source ~/.zshrc)"
 echo "  2. Oh My Zsh + plugins are ready to go"
-echo "  3. Add machine-specific config to ~/.zshrc.local"
-echo "  4. Per-project tool versions: create .mise.toml in project root"
-echo "  5. Add your 1Password SSH public key to git config:"
+echo "  3. Edit ~/.mcp-env with your API tokens (Jira, GitHub, Grafana)"
+echo "  4. Add machine-specific config to ~/.zshrc.local"
+echo "  5. Per-project tool versions: create .mise.toml in project root"
+echo "  6. Add your 1Password SSH public key to git config:"
 echo "     git config --global user.signingkey 'ssh-ed25519 YOUR_KEY'"
 echo ""
 info "Quick reference:"

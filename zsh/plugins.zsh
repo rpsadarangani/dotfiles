@@ -11,8 +11,8 @@ zstyle ':omz:update' frequency 7
 # Uncomment to disable auto-setting terminal title
 # DISABLE_AUTO_TITLE="true"
 
-# Command auto-correction
-ENABLE_CORRECTION="true"
+# Command auto-correction (interactive only — breaks non-interactive shells)
+[[ -o interactive ]] && ENABLE_CORRECTION="true"
 
 # Timestamp in history
 HIST_STAMPS="yyyy-mm-dd"

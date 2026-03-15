@@ -10,8 +10,11 @@ export HOMEBREW_NO_ENV_HINTS=1        # Suppress brew hints
 export HOMEBREW_NO_AUTO_UPDATE=1      # Don't auto-update on every install (use brewup manually)
 
 # ── Editor ──────────────────────────────────────────────────
-export EDITOR="vim"
-export VISUAL="vim"
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+# ── Node.js ──────────────────────────────────────────────────
+export NODE_TLS_REJECT_UNAUTHORIZED=0
 
 # ── History ───────────────────────────────────────────────────
 HISTSIZE=50000
@@ -105,6 +108,9 @@ fi
 # ── SDKMAN (keep existing) ───────────────────────────────────
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# ── MCP Server env vars ─────────────────────────────────────
+[[ -f ~/.mcp-env ]] && source ~/.mcp-env
 
 # ── Local Overrides (not tracked in git) ─────────────────────
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

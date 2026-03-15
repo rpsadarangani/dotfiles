@@ -21,7 +21,7 @@
 
 [core]
     pager = delta
-    editor = vim
+    editor = nvim
     autocrlf = input
     excludesFile = ~/.gitignore_global
     sshCommand = ssh
@@ -73,3 +73,5 @@
     undo = reset --soft HEAD~1
     contributors = shortlog --summary --numbered
     graph = log --graph --oneline --all --decorate
+[coderabbit]
+	machineId = cli/0b206eef9a7c4c788aa21225d0e71d35

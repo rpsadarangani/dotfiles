@@ -68,6 +68,14 @@ brew "tflint"                 # Terraform linter
 # ── Editor ─────────────────────────────────────────────────
 brew "neovim"                 # Hyperextensible Vim-based editor
 
+# ── LSP Servers (for Neovim) ──────────────────────────────
+brew "gopls"                  # Go LSP
+brew "pyright"                # Python LSP
+brew "terraform-ls"           # Terraform LSP
+brew "yaml-language-server"   # YAML LSP
+brew "lua-language-server"    # Lua LSP
+brew "helm-ls"                # Helm LSP
+
 # ── Shell ────────────────────────────────────────────────────
 brew "starship"               # Cross-shell prompt
 

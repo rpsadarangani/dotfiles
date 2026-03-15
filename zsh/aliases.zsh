@@ -1,17 +1,22 @@
 # ── Modern CLI Replacements ───────────────────────────────────
-alias ls='eza --icons --group-directories-first'
-alias ll='eza -la --icons --group-directories-first --git'
-alias la='eza -a --icons --group-directories-first'
-alias lt='eza --tree --icons --level=2'
-alias llt='eza --tree --icons --level=3 -la'
-alias cat='bat --paging=never'
-alias catp='bat'                        # bat with pager
-alias grep='rg'
+# Guard interactive-only aliases so non-interactive shells (CI, hooks,
+# Claude Code Bash tool) get standard command output.
+if [[ -o interactive ]]; then
+    alias ls='eza --icons --group-directories-first'
+    alias ll='eza -la --icons --group-directories-first --git'
+    alias la='eza -a --icons --group-directories-first'
+    alias lt='eza --tree --icons --level=2'
+    alias llt='eza --tree --icons --level=3 -la'
+    alias cat='bat --paging=never'
+    alias catp='bat'                        # bat with pager
+    alias grep='rg'
+    alias diff='delta'
+    alias top='htop'
+fi
 # fd is used directly (not aliased to find — incompatible syntax)
-alias diff='delta'
-alias top='htop'
-alias vi='vim'
-alias v='vim'
+alias vi='nvim'
+alias v='nvim'
+alias vim='nvim'
 
 # ── Kubernetes ────────────────────────────────────────────────
 alias k='kubectl'

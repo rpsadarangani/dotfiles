@@ -130,14 +130,12 @@ info "Setting session to close on clean exit..."
 success "Sessions close on clean exit"
 
 # ── Sync Preferences to dotfiles ─────────────────────────────
-info "Setting iTerm2 to sync preferences to ~/dotfiles/iterm2/..."
+# Disabled: PlistBuddy above applies settings directly to the system plist.
+# Loading from a custom folder without an exported plist causes "profile failed
+# to load" errors on every iTerm launch.
+defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool false
 
-mkdir -p "$DOTFILES/iterm2"
-
-defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$DOTFILES/iterm2"
-defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
-
-success "Preferences sync → ~/dotfiles/iterm2/"
+success "Preferences applied via PlistBuddy (custom folder sync disabled)"
 
 # ── Global Settings ──────────────────────────────────────────
 info "Applying global iTerm2 settings..."
