@@ -116,4 +116,9 @@
   },
   "extensions.verifySignature": false,
   "http.proxyStrictSSL": false,
+  "windsurf.terminal.cascadeProfile.osx": "managed",
+  "azureTerraform.survey": {
+    "surveyPromptDate": "2026-03-09T10:36:25.453Z",
+    "surveyPromptIgnoredCount": 0,
+  },
 }

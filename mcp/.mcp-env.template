@@ -1,0 +1,27 @@
+# MCP Server Environment Variables
+# Single source of truth for all tools (Claude Code, Cursor, Windsurf)
+# Copy to ~/.mcp-env and fill in your tokens:
+#   cp ~/dotfiles/mcp/.mcp-env.template ~/.mcp-env && chmod 600 ~/.mcp-env
+
+# Atlassian (Jira + Confluence)
+# Create API token at: https://id.atlassian.com/manage-profile/security/api-tokens
+export JIRA_URL="https://slicepay.atlassian.net"
+export JIRA_USERNAME="you@company.com"
+export JIRA_API_TOKEN=""
+export CONFLUENCE_URL="https://slicepay.atlassian.net/wiki"
+export CONFLUENCE_USERNAME="you@company.com"
+export CONFLUENCE_API_TOKEN=""
+
+# GitHub
+# Create token at: https://github.com/settings/tokens (classic or fine-grained)
+export GITHUB_PERSONAL_ACCESS_TOKEN=""
+
+# Grafana
+# Create API key in Grafana: Configuration > API Keys
+# For multiple instances, duplicate and rename (e.g. GRAFANA_PROD_URL)
+export GRAFANA_URL="https://grafana.company.com"
+export GRAFANA_API_KEY=""
+
+# OpenMemory
+# Get your token at: https://app.openmemory.dev
+export OPENMEMORY_API_TOKEN=""

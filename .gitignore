@@ -4,6 +4,7 @@ Thumbs.db
 
 # Local overrides (machine-specific, not tracked)
 *.local
+.mcp-env
 
 # Backup dirs
 .dotfiles_backup/

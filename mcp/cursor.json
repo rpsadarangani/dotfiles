@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "atlassian": {
+      "command": "sh",
+      "args": ["-c", ". ~/.mcp-env && exec uvx mcp-atlassian"]
+    },
+    "github": {
+      "command": "sh",
+      "args": ["-c", ". ~/.mcp-env && exec npx -y @modelcontextprotocol/server-github"]
+    },
+    "kubernetes": {
+      "command": "npx",
+      "args": ["-y", "mcp-server-kubernetes"]
+    },
+    "grafana": {
+      "command": "sh",
+      "args": ["-c", ". ~/.mcp-env && exec npx -y @grafana/mcp-server-grafana"]
+    }
+  }
+}
