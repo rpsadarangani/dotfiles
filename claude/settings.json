@@ -82,5 +82,6 @@
       }
     ]
   },
-  "showTurnDuration": true
+  "showTurnDuration": true,
+  "effortLevel": "high"
 }
