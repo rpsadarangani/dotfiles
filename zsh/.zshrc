@@ -7,7 +7,6 @@ DOTFILES="$HOME/dotfiles"
 
 # ── Homebrew ────────────────────────────────────────────────
 export HOMEBREW_NO_ENV_HINTS=1        # Suppress brew hints
-export HOMEBREW_NO_AUTO_UPDATE=1      # Don't auto-update on every install (use brewup manually)
 
 # ── Editor ──────────────────────────────────────────────────
 export EDITOR="nvim"
