@@ -97,6 +97,10 @@ cask "1password-cli"            # 1Password CLI (op)
 # claude-code: install via npm (npm i -g @anthropic-ai/claude-code)
 brew "gemini-cli"             # Google Gemini CLI
 
+# ── Communication & Productivity ──────────────────────────
+cask "slack"                    # Team messaging
+cask "notion"                   # Notes & docs
+
 # ── Window Management ───────────────────────────────────────
 cask "rectangle"              # Window manager (snap & tile)
 
