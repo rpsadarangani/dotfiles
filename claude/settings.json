@@ -45,7 +45,12 @@
     ],
     "deny": [
       "Bash(sudo rm -rf /)",
-      "Bash(chmod 777 *)"
+      "Bash(chmod 777 *)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(*.pem)",
+      "Read(*.key)",
+      "Read(~/.ssh/**)"
     ],
     "ask": [
       "Bash(git push *)",
